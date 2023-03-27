@@ -36,17 +36,12 @@ class Dbconnect
                 id = @db.last_insert_row_id()
                 user = @db.execute("SELECT id, firstname, lastname, age, email FROM users WHERE id = ?", id)[0]
                         
-            when :find
-                user = resultset.next_hash
-            
-            when :sign_in
+            when :find, :sign_in
                 user = resultset.next_hash
        
-            when :update
+            when :update, :destroy
                 user = @db.changes
                 
-            when :destroy
-                user = @db.changes
         end      
 
         resultset.close         
